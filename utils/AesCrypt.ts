@@ -1,6 +1,4 @@
 import CryptoES from "crypto-es";
-import CryptoJS from "crypto-js";
-import { CheckForLocalPassPhrase, GenerateRandomPassphrase } from "./Security";
 import * as SecureStore from "expo-secure-store";
 
 export function EncryptString(plaintext: string | undefined): string {
@@ -23,8 +21,8 @@ export function DecryptString(cipherText: string | undefined): string {
   try {
     const passPhrase = SecureStore.getItem("passphrase");
     if (cipherText && passPhrase) {
-      const decrypted = CryptoJS.AES.decrypt(cipherText, passPhrase).toString(
-        CryptoJS.enc.Utf8
+      const decrypted = CryptoES.AES.decrypt(cipherText, passPhrase).toString(
+        CryptoES.enc.Utf8
       );
       return decrypted;
     } else {

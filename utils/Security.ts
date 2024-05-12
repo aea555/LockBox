@@ -1,6 +1,5 @@
 import * as SecureStorage from "expo-secure-store";
-import CryptoJS from "crypto-js";
-
+import CryptoES from "crypto-es";
 export interface KeyCheckResponse {
   success: boolean;
   key: string;
@@ -144,9 +143,9 @@ export function GenerateRandomEncryptionKey(length: number): KeyCheckResponse {
       console.log(returnObj.message);
       return returnObj;
     } else {
-      const key = CryptoJS.lib.WordArray.random(length);
-      const salt = CryptoJS.lib.WordArray.random(16);
-      const derivedKey = CryptoJS.PBKDF2(key, salt, {
+      const key = CryptoES.lib.WordArray.random(length);
+      const salt = CryptoES.lib.WordArray.random(16);
+      const derivedKey = CryptoES.PBKDF2(key, salt, {
         keySize: 256 / 32,
         iterations: 10000,
       });
@@ -174,7 +173,7 @@ export function GenerateRandomPassphrase(): KeyCheckResponse {
   try {
     const passphraseLength = 24;
     const passphrase =
-      CryptoJS.lib.WordArray.random(passphraseLength).toString();
+      CryptoES.lib.WordArray.random(passphraseLength).toString();
     SavePassPhrase(passphrase);
     const returnObj: KeyCheckResponse = {
       success: true,

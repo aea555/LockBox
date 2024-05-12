@@ -2,9 +2,7 @@ import { Results } from "realm/dist/public-types/Results";
 import { SecretSchema } from "../utils/DbSchemas";
 import Realm from "realm";
 import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
 import * as DocumentPicker from "expo-document-picker";
-import * as MediaLibrary from "expo-media-library";
 import { BSON } from "realm";
 
 interface SecretObject {
