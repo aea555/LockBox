@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { AlertDialog, Button, XStack, YStack, Text } from "tamagui";
+import { AlertDialog, Button, XStack, YStack } from "tamagui";
 
 interface ConfirmationAlertProps {
   saveButtonLabel: string;
@@ -8,6 +8,7 @@ interface ConfirmationAlertProps {
   onPress?: () => void;
   button: ReactNode;
   inputs?: ReactNode;
+  cancelText: string;
 }
 
 export function ConfirmationAlert(props: ConfirmationAlertProps) {
@@ -50,7 +51,7 @@ export function ConfirmationAlert(props: ConfirmationAlertProps) {
                 {props.saveButtonLabel}
               </Button>
               <AlertDialog.Cancel asChild>
-                <Button>Cancel</Button>
+                <Button>{props.cancelText}</Button>
               </AlertDialog.Cancel>
             </XStack>
           </YStack>

@@ -36,6 +36,8 @@ yarn-error.*
 
 .env
 
+android/
+
 android/app/src/main/res
 
 android/local.properties

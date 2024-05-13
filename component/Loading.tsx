@@ -6,13 +6,14 @@ type LooseCombinedObjects<T, U> = T & U;
 
 interface LoadingProps {
   fontStyle?: StyleProp<LooseCombinedObjects<React.CSSProperties, TextStyle>>
+  text: string;
 }
 
 export default function Loading(props: LoadingProps) {
   return (
     <XStack alignItems="center" gap="$3">
       <Text fontSize="$7" style={props.fontStyle}>
-        Please wait as your request is processed...
+        {props.text}
       </Text>
       <Spinner size="large" color="$purple10" />
     </XStack>

@@ -8,8 +8,9 @@ interface ModalProps {
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   fontStyle?: StyleProp<LooseCombinedObjects<React.CSSProperties, TextStyle>>;
   confirmationText?: string;
-  label?: string;
+  label: string;
   onPress?: () => void;
+  closeText: string;
 }
 
 export default function ConfirmationModal(props: ModalProps) {
@@ -35,7 +36,7 @@ export default function ConfirmationModal(props: ModalProps) {
                 onPress={() => props.setModalVisible(!props.modalVisible)}
                 chromeless
               >
-                <Text style={props.fontStyle}>Close</Text>
+                <Text style={props.fontStyle}>{props.closeText}</Text>
               </Button>
               <Button onPress={props.onPress} backgroundColor={"$accentBackground"}>
                 <Text style={props.fontStyle}>{props.label}</Text>

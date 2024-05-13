@@ -6,6 +6,9 @@ import { isURL, isEmail } from "validator";
 import { CreateSecret, CreateSecretProps } from "../../scripts/ManageSecrets";
 import { useRealm } from "@realm/react";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { selectLanguageCode } from "../../utils/authSlice";
+import { getLocalizedString } from "../../localization/localization";
 
 export default function Newsecret() {
   const colorScheme = useColorScheme();
@@ -17,6 +20,7 @@ export default function Newsecret() {
   const [password, setPassword] = useState("");
   const [toggle, setToggle] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const langCode = useSelector(selectLanguageCode);
 
   useEffect(() => {
     if (
@@ -48,16 +52,17 @@ export default function Newsecret() {
     <ScrollView>
       <YStack paddingHorizontal="$8" paddingVertical="$3" gap="$4">
         <YStack>
-          <Label style={styles.pageFont}>Name</Label>
+          <Label style={styles.pageFont}>
+            {getLocalizedString("NAME", langCode)}
+          </Label>
           <Input
             inputMode="text"
             value={name}
             onChangeText={(t) => setName(t)}
           />
         </YStack>
-
         <SecretField
-          label="Site"
+          label={getLocalizedString("WEBSITE_ADDRESS", langCode)}
           value={site}
           setValue={setSite}
           colorScheme={colorScheme}
@@ -66,7 +71,7 @@ export default function Newsecret() {
           wrongInput={!isURL(site)}
         />
         <SecretField
-          label="Email"
+          label={getLocalizedString("EMAIL_ADDRESS", langCode)}
           value={email}
           setValue={setEmail}
           colorScheme={colorScheme}
@@ -75,7 +80,7 @@ export default function Newsecret() {
           wrongInput={!isEmail(email)}
         />
         <SecretField
-          label="Password"
+          label={getLocalizedString("PASSWORD", langCode)}
           value={password}
           setValue={setPassword}
           colorScheme={colorScheme}
@@ -92,7 +97,9 @@ export default function Newsecret() {
           alignItems="center"
           disabled={disabled}
         >
-          <Text style={styles.pageFont}>Submit</Text>
+          <Text style={styles.pageFont}>
+            {getLocalizedString("SUBMIT", langCode)}
+          </Text>
         </Button>
       </YStack>
     </ScrollView>

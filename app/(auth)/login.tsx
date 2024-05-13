@@ -1,24 +1,27 @@
 import { useRouter } from "expo-router";
-import { useState, useCallback, useEffect } from "react";
-import { Image, StyleSheet, useColorScheme } from "react-native";
+import { useState } from "react";
+import { Image, StyleSheet } from "react-native";
 import { Button, Spinner, Text, XStack, YStack } from "tamagui";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFonts, RedHatDisplay_900Black } from "@expo-google-fonts/dev";
 import PasswordToggle from "../../component/PasswordToggle";
 import PasswordInput from "../../component/PasswordInput";
 import { LoginProps, SubmitLogin } from "../../scripts/SubmitLogin";
 import { useQuery, useRealm } from "@realm/react";
 import { AuthSchema } from "../../utils/DbSchemas";
+import { selectLanguageCode } from "../../utils/authSlice";
+import { getLocalizedString } from "../../localization/localization";
 
 export default function Login() {
   const dispatch = useDispatch();
   const router = useRouter();
   const realm = useRealm();
   const user = useQuery({ type: AuthSchema })[0];
+  const langCode = useSelector(selectLanguageCode);
   const [passcode, setPasscode] = useState("");
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [badRequest, setBadRequest] = useState(false);
+  const [badRequest, setBadRequest] = useState(false);  
 
   let [fontsLoaded] = useFonts({
     RedHatDisplay_900Black,
@@ -52,6 +55,7 @@ export default function Login() {
       <Image source={require("../../static/Lockbox.png")} />
       <YStack gap={"$1"}>
         <PasswordInput
+          label={getLocalizedString("PASSCODE", langCode)}
           passcode={passcode}
           setPasscode={setPasscode}
           checked={checked}
@@ -60,13 +64,13 @@ export default function Login() {
         />
         {badRequest ? (
           <Text fontSize="$7" color={"red"} style={styles.pageFont}>
-            Invalid passcode.
+            {getLocalizedString("INVALID_PASSCODE", langCode)}
           </Text>
         ) : null}
         {loading ? (
           <XStack alignItems="center" gap="$3">
             <Text fontSize="$7" style={styles.pageFont}>
-              Please wait as your request is processed...
+              {getLocalizedString("LOADING_TEXT", langCode)}
             </Text>
             <Spinner size="large" color="$purple10" />
           </XStack>
@@ -75,6 +79,7 @@ export default function Login() {
           checked={checked}
           setChecked={setChecked}
           disabled={loading}
+          label={getLocalizedString("SHOW_PASSCODE", langCode)}
         />
       </YStack>
       <YStack gap={"$1"}>
@@ -84,7 +89,7 @@ export default function Login() {
           style={[styles.button, loading ? { backgroundColor: "grey" } : null]}
         >
           <Text color={"white"} fontSize={"$7"} style={styles.pageFont}>
-            Login
+            {getLocalizedString("LOGIN", langCode)}
           </Text>
         </Button>
       </YStack>

@@ -24,7 +24,7 @@ export default function PasswordToggle(props: ComponentProps) {
         fontSize={"$5"}
         style={styles.pageFont}
       >
-        {props.label ?? "Show Password"}
+        {props.label}
       </Label>
     </XStack>
   );

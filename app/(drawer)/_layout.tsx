@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Redirect, useRouter } from "expo-router";
-import { useSelector } from "react-redux";
-import { selectAuthStatus, selectPasscode } from "../../utils/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAuthStatus, selectLanguageCode, selectPasscode } from "../../utils/authSlice";
 import { StyleSheet, useColorScheme, Image } from "react-native";
 import { Text} from "tamagui";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -14,12 +14,33 @@ import {
 } from "@expo-google-fonts/dev";
 import { useQuery } from "@realm/react";
 import { AuthSchema } from "../../utils/DbSchemas";
+import { getLocalizedString } from "../../localization/localization";
+import * as Localization from "expo-localization";
+import * as SecureStore from "expo-secure-store";
 
 export default function DrawerLayout() {
   const router = useRouter();
   const isAuthenticated = useSelector(selectAuthStatus);
   const hasPasscode = useQuery({ type: AuthSchema }).length > 0;
   const colorScheme = useColorScheme();
+  const dispatch = useDispatch();
+  const langCode = useSelector(selectLanguageCode);
+
+  useEffect(() => {
+    async function setupLocales() {
+      if (!langCode) {
+        const res = Localization.getLocales()[0].languageCode;        
+        if (res) {
+          dispatch({
+            type: "auth/saveLanguageCode",
+            payload: { languageCode: res },
+          });
+          await SecureStore.setItemAsync("language-code", res);
+        }
+      }
+    }
+    setupLocales();
+  }, []);
 
   let [fontsLoaded] = useFonts({
     RedHatDisplay_900Black,
@@ -44,7 +65,7 @@ export default function DrawerLayout() {
         <Drawer.Screen
           name="index"
           options={{
-            drawerLabel: () => <Text style={styles.pageFont}>Home</Text>,
+            drawerLabel: () => <Text style={styles.pageFont}>{getLocalizedString("HOME_PAGE", langCode)}</Text>,
             headerTitle: () => (
               <Image
                 source={require("../../static/Lockbox.png")}
@@ -66,7 +87,7 @@ export default function DrawerLayout() {
         <Drawer.Screen
           name="settings"
           options={{
-            drawerLabel: () => <Text style={styles.pageFont}>Settings</Text>,
+            drawerLabel: () => <Text style={styles.pageFont}>{getLocalizedString("SETTINGS_PAGE", langCode)}</Text>,
             headerTitle: () => (
               <Image
                 source={require("../../static/Lockbox.png")}
@@ -97,9 +118,11 @@ export default function DrawerLayout() {
             ),
             drawerIcon: () => <></>,
             headerTransparent: false,
+            drawerItemStyle: {display: "none"},
             headerTintColor: colorScheme === "dark" ? "white" : "black",
             swipeEnabled: false,
             drawerStyle: { display: "none" },
+            drawerHideStatusBarOnOpen: true,
             headerLeft: () => (
               <FontAwesome
                 color={colorScheme === "dark" ? "white" : "black"}

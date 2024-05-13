@@ -4,8 +4,8 @@
   "main": "expo-router/entry",
   "scheme": "aea.lockbox.com",
   "scripts": {
-    "start": "expo start --port 3000",
-    "android": "expo run:android -d --port 3000",
+    "start": "expo start --port 3001",
+    "android": "expo run:android -d --port 3001",
     "ios": "expo run:ios -d",
     "web": "expo start --web",
     "prebuild": "expo prebuild"
@@ -50,7 +50,8 @@
     "text-encoding": "^0.7.0",
     "uuid": "^9.0.1",
     "validator": "^13.11.0",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "expo-localization": "~14.8.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

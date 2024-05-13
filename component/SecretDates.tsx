@@ -9,6 +9,8 @@ interface SecretDatesProps {
   lastEdited: Date,
   inputStyle: StyleProp<LooseCombinedObjects<React.CSSProperties, TextStyle>>,
   fontStyle: StyleProp<LooseCombinedObjects<React.CSSProperties, TextStyle>>,
+  createdAtText: string;
+  lastUpdatedText: string;
 }
 
 
@@ -16,13 +18,13 @@ export default function SecretDates(props: SecretDatesProps) {
   return (
     <YStack>
       <Text style={props.inputStyle}>
-        Created:{" "}
+        {props.createdAtText}:{" "}
         <Text style={props.fontStyle}>
           {props.createdAt.toLocaleDateString()} {props.createdAt.toLocaleTimeString()}
         </Text>
       </Text>
       <Text style={props.inputStyle}>
-        Last Updated:{" "}
+        {props.lastUpdatedText}:{" "}
         <Text style={props.fontStyle}>
           {props.lastEdited.toLocaleDateString()} {props.lastEdited.toLocaleTimeString()}
         </Text>

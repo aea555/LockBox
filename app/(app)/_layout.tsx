@@ -1,6 +1,4 @@
 import { Stack } from "expo-router";
-import { RealmProvider } from "@realm/react";
-import { AuthSchema, SecretSchema } from "../../utils/DbSchemas";
 
 export default function AppLayout() {
   return (

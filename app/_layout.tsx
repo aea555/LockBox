@@ -7,7 +7,7 @@ import { Slot } from "expo-router";
 import { ActivityIndicator, useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../config/tamagui.config";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import store from "../utils/store";
 import { RealmProvider } from "@realm/react";
 import { AuthSchema, SecretSchema } from "../utils/DbSchemas";

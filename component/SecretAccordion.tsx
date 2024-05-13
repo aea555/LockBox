@@ -18,6 +18,17 @@ import ConfirmationModal from "./ConfirmationModal";
 import { DecryptString } from "../utils/AesCrypt";
 
 interface SecretAccordionProps {
+  websiteAddressText: string;
+  emailAddressText: string;
+  passwordText: string;
+  deleteConfirmationText: string;
+  deleteText: string;
+  updateConfirmationText: string;
+  updateText: string;
+  loadingText: string;
+  lastUpdatedText: string;
+  createdAtText: string;
+  closeText: string;
   secret: SecretSchema;
   realm: Realm;
 }
@@ -93,11 +104,11 @@ export default function SecretAccordion(props: SecretAccordionProps) {
           exitStyle={{ opacity: 0 }}
         >
           {loading ? (
-            <Loading fontStyle={styles.pageFont} />
+            <Loading text={props.loadingText} fontStyle={styles.pageFont} />
           ) : (
             <YStack gap="$5">
               <SecretField
-                label="Website Address"
+                label={props.websiteAddressText}
                 value={site}
                 setValue={setSite}
                 colorScheme={colorScheme}
@@ -107,7 +118,7 @@ export default function SecretAccordion(props: SecretAccordionProps) {
                 fontStyle={styles.pageFont}
               />
               <SecretField
-                label="Email"
+                label={props.emailAddressText}
                 value={email}
                 setValue={setEmail}
                 colorScheme={colorScheme}
@@ -117,7 +128,7 @@ export default function SecretAccordion(props: SecretAccordionProps) {
                 fontStyle={styles.pageFont}
               />
               <SecretField
-                label="Password"
+                label={props.passwordText}
                 value={password}
                 setValue={setPassword}
                 toggle={passwordToggle}
@@ -130,16 +141,17 @@ export default function SecretAccordion(props: SecretAccordionProps) {
                 <ConfirmationModal
                   modalVisible={updateModalVisible}
                   setModalVisible={setUpdateModalVisible}
-                  confirmationText="Are you sure that you want to update this secret?"
+                  confirmationText={props.updateConfirmationText}
                   fontStyle={styles.pageFont}
-                  label="Update"
+                  label={props.updateText}
                   onPress={Update}
+                  closeText={props.closeText}
                 />
                 <Button
                   backgroundColor={"darkorchid"}
                   onPress={() => setUpdateModalVisible(!updateModalVisible)}
                 >
-                  <Text style={styles.pageFont}>Update</Text>
+                  <Text style={styles.pageFont}>{props.updateText}</Text>
                 </Button>
               </YStack>
               <SecretDates
@@ -147,21 +159,24 @@ export default function SecretAccordion(props: SecretAccordionProps) {
                 fontStyle={styles.pageFont}
                 createdAt={createdAt}
                 lastEdited={lastEdited}
+                lastUpdatedText={props.lastUpdatedText}
+                createdAtText={props.createdAtText}
               />
               <YStack>
                 <ConfirmationModal
                   modalVisible={deleteModalVisible}
                   setModalVisible={setDeleteModalVisible}
-                  confirmationText="Are you sure that you want to delete this secret?"
+                  confirmationText={props.deleteConfirmationText}
                   fontStyle={styles.pageFont}
-                  label="Delete"
+                  label={props.deleteText}
                   onPress={Delete}
+                  closeText={props.closeText}
                 />
                 <Button
                   backgroundColor="$red9"
                   onPress={() => setDeleteModalVisible(!deleteModalVisible)}
                 >
-                  <Text style={styles.pageFont}>Delete</Text>
+                  <Text style={styles.pageFont}>{props.deleteText}</Text>
                 </Button>
               </YStack>
             </YStack>

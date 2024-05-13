@@ -2,6 +2,7 @@ import { Input, Label, Text } from "tamagui";
 import { StyleSheet } from "react-native";
 
 interface ComponentProps {
+  label: string;
   passcode: string;
   setPasscode: React.Dispatch<React.SetStateAction<string>>;
   checked: boolean;
@@ -14,7 +15,7 @@ export default function PasswordInput(props: ComponentProps) {
   return (
     <>
       <Label style={styles.pageFont} fontSize={"$7"}>
-        Passcode
+        {props.label}
       </Label>
       <Input
         value={props.passcode}

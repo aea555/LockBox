@@ -6,19 +6,20 @@ interface PreloadedState {
   auth: {
     isAuthenticated: boolean;
     passcode: string;
+    languageCode: string;
   };
 }
 
 let preloadedState: PreloadedState | undefined;
 const persistedPasscode = SecureStore.getItem("passcode");
+const persistedLanguageCode = SecureStore.getItem("language-code");
 
-if (
-  persistedPasscode 
-) {
+if (persistedPasscode && persistedLanguageCode) {
   preloadedState = {
     auth: {
       isAuthenticated: false,
-      passcode: persistedPasscode
+      passcode: persistedPasscode,
+      languageCode: persistedLanguageCode,
     },
   };
 }

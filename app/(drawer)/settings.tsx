@@ -1,7 +1,7 @@
 import { StyleSheet, useColorScheme } from "react-native";
 import { ListItem, XStack, YStack, Text, Button, ScrollView } from "tamagui";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 
 import ClearStorage from "../../scripts/ClearStorage";
@@ -21,19 +21,22 @@ import SecretField from "../../component/SecretField";
 import { CustomDialog } from "../../component/CustomDialog";
 import Loading from "../../component/Loading";
 import { ExportJson, ImportJson } from "../../scripts/ManageData";
+import { getLocalizedString } from "../../localization/localization";
+import { selectLanguageCode } from "../../utils/authSlice";
 
 export default function Tab() {
   const dispatch = useDispatch();
   const router = useRouter();
   const realm = useRealm();
   const user = useQuery({ type: AuthSchema })[0];
-  const secrets = useQuery({type: SecretSchema});
+  const secrets = useQuery({ type: SecretSchema });
   const colorScheme = useColorScheme();
   const [currentPasscode, setCurrentPasscode] = useState("");
   const [newPasscode, setNewPasscode] = useState("");
   const [curPasscodeChecked, setCurPasscodeChecked] = useState(false);
   const [newPasscodeChecked, setNewPasscodeChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const langCode = useSelector(selectLanguageCode);
 
   let [fontsLoaded] = useFonts({
     RedHatDisplay_900Black,
@@ -79,14 +82,14 @@ export default function Tab() {
 
   const changePasscodeNode = (
     <Text fontSize="$5" style={styles.pageFont}>
-      Change Passcode
+      {getLocalizedString("CHANGE_PASSCODE", langCode)}
     </Text>
   );
 
   const saveButton = (
     <Button onPress={handleChangePasscode} backgroundColor={"darkorchid"}>
       <Text fontSize="$5" style={styles.pageFont}>
-        Submit
+        {getLocalizedString("SUBMIT", langCode)}
       </Text>
     </Button>
   );
@@ -94,7 +97,7 @@ export default function Tab() {
   const inputs = (
     <YStack gap="$5">
       <SecretField
-        label="Current Passcode"
+        label={getLocalizedString("CURRENT_PASSCODE", langCode)}
         value={currentPasscode}
         setValue={setCurrentPasscode}
         colorScheme={colorScheme}
@@ -104,7 +107,7 @@ export default function Tab() {
         inputStyle={styles.pageFontLight}
       />
       <SecretField
-        label="New Passcode"
+        label={getLocalizedString("NEW_PASSCODE", langCode)}
         value={newPasscode}
         setValue={setNewPasscode}
         colorScheme={colorScheme}
@@ -113,7 +116,7 @@ export default function Tab() {
         fontStyle={styles.pageFont}
         inputStyle={styles.pageFontLight}
       />
-      {loading ? <Loading fontStyle={styles.pageFont} /> : null}
+      {loading ? <Loading text={getLocalizedString("LOADING_TEXT", langCode)} fontStyle={styles.pageFont} /> : null}
     </YStack>
   );
 
@@ -125,10 +128,10 @@ export default function Tab() {
             children={
               <CustomDialog
                 button={changePasscodeNode}
-                desc="To change your passcode, please enter your current and new passcodes."
+                desc={getLocalizedString("PASSCODE_RECOMMENDATION", langCode)}
                 onPress={handleChangePasscode}
                 saveButton={saveButton}
-                title="Change Passcode"
+                title={getLocalizedString("CHANGE_PASSCODE", langCode)}
                 inputs={inputs}
                 fontStyle={styles.pageFont}
               />
@@ -144,7 +147,7 @@ export default function Tab() {
           <ListItem
             children={
               <Text fontSize="$5" style={styles.pageFont}>
-                Import Data
+                {getLocalizedString("IMPORT_DATA", langCode)}
               </Text>
             }
             justifyContent="flex-start"
@@ -159,7 +162,7 @@ export default function Tab() {
           <ListItem
             children={
               <Text fontSize="$5" style={styles.pageFont}>
-                Export Data
+                {getLocalizedString("EXPORT_DATA", langCode)}
               </Text>
             }
             justifyContent="flex-start"
@@ -174,7 +177,7 @@ export default function Tab() {
           <ListItem
             children={
               <Text fontSize="$5" style={styles.pageFont}>
-                Sign Out
+                {getLocalizedString("SIGN_OUT", langCode)}
               </Text>
             }
             justifyContent="flex-start"
