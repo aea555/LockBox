@@ -5,7 +5,7 @@ import {
 } from "@react-navigation/native";
 import { Slot } from "expo-router";
 import { ActivityIndicator, useColorScheme } from "react-native";
-import { TamaguiProvider } from "tamagui";
+import { PortalProvider, TamaguiProvider } from "tamagui";
 import tamaguiConfig from "../config/tamagui.config";
 import { Provider, useSelector } from "react-redux";
 import store from "../utils/store";
@@ -22,6 +22,7 @@ import {
 } from "../utils/Security";
 import TextEncoding from "text-encoding";
 import * as FileSystem from "expo-file-system";
+import { ToastProvider } from "@tamagui/toast";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -88,7 +89,11 @@ export default function RootLayout() {
             <ThemeProvider
               value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
             >
-              <Slot />
+              <PortalProvider>
+                <ToastProvider>
+                  <Slot />
+                </ToastProvider>
+              </PortalProvider>
             </ThemeProvider>
           </TamaguiProvider>
         </RealmProvider>

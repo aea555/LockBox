@@ -50,7 +50,6 @@ export function CreateSecret(props: CreateSecretProps) {
 export function UpdateSecret(props: UpdateSecretProps) {
   try {
     const newEncryptedPassword = EncryptString(props.password);
-    console.log("NEW SITE", props.site);
     props.realm.write(() => {
       (props.secret.site = props.site ?? props.secret.site),
       (props.secret.email = props.email ?? props.secret.email),

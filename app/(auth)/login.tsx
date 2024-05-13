@@ -46,6 +46,9 @@ export default function Login() {
       setLoading(false);
       setBadRequest(true);
     } else {
+      setPasscode("");
+      setChecked(false);
+      setLoading(false);
       router.replace("/");
     }
   }

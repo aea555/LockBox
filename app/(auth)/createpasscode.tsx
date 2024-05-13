@@ -43,14 +43,23 @@ export default function CreatePasscode() {
 
   const props: CreatePasscodeProps = {
     dispatch,
-    router,
     passcode,
     realm,
   };
 
   async function handlePress() {
     setLoading(true);
-    await SubmitNewPasscode(props);
+    const res = await SubmitNewPasscode(props);
+    if (res){
+      setLoading(false);
+      setChecked(false);
+      setFocused(false);
+      setWrongInput(false);
+      router.replace("/");
+    } else {
+      setLoading(false);
+      setWrongInput(true);
+    }
   }
 
   return (
@@ -98,7 +107,7 @@ export default function CreatePasscode() {
             styles.button,
             wrongInput || loading ? { backgroundColor: "grey" } : null,
           ]}
-          disabled={wrongInput || loading}
+          disabled={wrongInput ?? loading}
         >
           <Text color={"white"} fontSize={"$7"} style={styles.pageFont}>
             {getLocalizedString("CREATE_PASSCODE", langCode)}

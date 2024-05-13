@@ -13,7 +13,8 @@ import { getLocalizedString } from "../../localization/localization";
 export default function Tab() {
   const router = useRouter();
   const realm = useRealm();
-  const [secrets, setSecrets] = useState(useQuery({ type: SecretSchema })); 
+  const secrets = useQuery({ type: SecretSchema });
+  const [_secrets, setSecrets] = useState(secrets);
   const langCode = useSelector(selectLanguageCode);
 
   return (
